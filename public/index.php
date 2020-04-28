@@ -10,7 +10,7 @@ $user02 = new User(2, "Roanna", "Cooper");
 
 $post01 = new Post(
     1,
-    "images/chairs.jpg",
+    "http://www.authentic-antiques.com/images/chaises_bistrot_baumann.jpg",
     "4 chaises en bois",
     "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
     "Posté il y a 3 mins",
@@ -71,31 +71,38 @@ $items = array($post01, $post02, $post03, $post04);
     <title>Freecycle Marseille</title>
 </head>
 
-<body>
+<body style="background-image: url('https://www.vps.net/blog/wp-content/uploads/2016/08/shutterstock_349708880-710x345.jpg'); background-repeat: repeat;">
     <nav class="navbar navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand h1">Freecycle Marseille</a>
+            <a class="navbar-brand h1 pt-3">SHOPPING GRATUIT ENTRE MARSEILLAIS</a>
             <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="🔍Chercher" aria-label="Chercher">
+                <input class="form-control border-dark rounded-0 mr-2" type="search" placeholder="Chercher" aria-label="Chercher">
                 <!-- <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Chercher</button> -->
-                <button class="btn btn-outline-success border-0 shadow-sm my-2 ml-2">LOGIN</button>
-                <button class="btn btn-outline-danger border-0 shadow-sm my-2 ml-2">LOGOUT</button>
+                <button class="btn-success border-0 px-4 py-2 ml-2">LOGIN</button>
+                <!-- <button class="btn-danger px-3 ml-2">OUT</button> -->
             </form>
         </div>
     </nav>
 
-    <img src="images/hero.jpg" class="img-fluid mb-5" alt="Responsive image">
+    <div class="container py-5 mb-5" style="color: #E8E4E1;">
+        <h1 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; letter-spacing: -10px; font-size: 284px;">
+            FREECYCLE
+        </h1>
+        <h1 style="font-size: 180px; letter-spacing: 50px; line-height: 40%">
+            Marseille
+        </h1>
+    </div>
 
     <main class="container">
         <div class="row">
 
             <?php foreach ($items as $item) { ?>
 
-                <article class="col-6">
-                    <div class="card my-3 border-0 shadow-sm">
-                        <div class="row no-gutters">
-                            <div class="col-4 ">
-                                <div class="rounded-left" style="background: url(<?php echo $item->url_image ?>) no-repeat center; background-size: cover; min-height: 100%; position: relative;">
+                <article class="col-12">
+                    <div class="my-3" style="background-color: #E8E4E1; border: solid #948F8A; border-width: thick;">
+                        <div class="row">
+                            <div class="col-4">
+                                <div style="background: url('<?php echo $item->url_image ?>') no-repeat center; background-size: cover; min-height: 100%; position: relative">
                                 </div>
                             </div>
                             <div class="col-8  ">
@@ -104,8 +111,8 @@ $items = array($post01, $post02, $post03, $post04);
                                     <p class="card-text"><?php echo $item->content ?>
                                         <small class="text-muted"><?php echo $item->created_at ?></small>
                                     </p>
-                                    <p class="card-text"><span class="badge badge-secondary"><?php echo $item->category ?></span>
-                                        <span class="badge badge-secondary"><?php echo $item->location ?></span></p>
+                                    <p class="card-text"><span class="badge badge-secondary rounded-0"><?php echo $item->category ?></span>
+                                        <span class="badge badge-secondary rounded-0"><?php echo $item->location ?></span></p>
                                     <p class="card-text">Contact: <?php echo $item->user->nickname ?>
                                         <a href="#" class="card-link"><?php echo $item->contact ?></a>
                                     </p>
