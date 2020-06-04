@@ -31,13 +31,21 @@
                         echo "<div class='alert alert-warning' role='alert'>$errorMsg</div>";
                     }
                     ?>
-                    <input type="text" class="form-control border-dark rounded-0 mb-1" name="img" placeholder="Ajouter une image (lien url)" required="" autofocus="" />
-                    <input type="text" class="form-control border-dark rounded-0 mb-1" name="title" placeholder="Titre" required="" />
-                    <input type="text" class="form-control border-dark rounded-0 mb-1" name="content" placeholder="Description" required="" />
-                    <input type="text" class="form-control border-dark rounded-0 mb-1" name="category" placeholder="Catégorie" required="" />
-                    <input type="text" class="form-control border-dark rounded-0 mb-1" name="location" placeholder="Votre arrondissement" required="" />
-                    <input type="text" class="form-control border-dark rounded-0 mb-1" name="contact" placeholder="Email or Phone" required="" />
-                    <button class="btn btn-lg btn-dark rounded-0 btn-block mb-5" type="submit">DONATE</button>
+                    <div class="row">
+                        <div class='col-4'>
+                            <input type="text" style="height: 98%;" class="form-control border-dark rounded-0 mb-1" name="img" placeholder="Ajouter une image (lien url)" required="" autofocus="" />
+                        </div>
+                        <div class='col-8'>
+                            <input type="text" class="form-control border-dark rounded-0 mb-1" name="title" placeholder="Titre" required="" />
+                            <input type="text" class="form-control border-dark rounded-0 mb-1" name="content" placeholder="Description" required="" />
+                            <input type="text" class="form-control border-dark rounded-0 mb-1" name="category" placeholder="Catégorie" required="" />
+                            <input type="text" class="form-control border-dark rounded-0 mb-1" name="location" placeholder="Votre arrondissement" required="" />
+                            <input type="text" class="form-control border-dark rounded-0 mb-1" name="contact" placeholder="Email or Phone" required="" />
+                        </div>
+                    <div class="col">
+                        <button class="btn btn-lg btn-dark rounded-0 btn-block mb-5" type="submit">DONATE</button>
+                    </div>
+                    </div>
                 </form>
             </div>
         </div>
