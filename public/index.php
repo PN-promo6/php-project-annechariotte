@@ -2,90 +2,102 @@
 
 use Entity\Post;
 use ludk\Persistence\ORM;
+use Entity\User;
 
 require __DIR__ . '/../vendor/autoload.php';
+session_start();
 
 $orm = new ORM(__DIR__ . '/../Resources');
 
+$manager = $orm->getManager();
 $postRepo = $orm->getRepository(Post::class);
-$items = $postRepo->findAll();
-?>
+$userRepo = $orm->getRepository(User::class);
 
-<!doctype html>
-<html lang="en">
+// $item = $postRepo->find(1);
+// $item->title = "Nouveau titre";
+// $manager->persist($item);
+// $manager->flush();
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+$action = $_GET["action"] ?? "display";
+switch ($action) {
+    case 'register':
+        if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordRetype'])) {
+            $errorMsg = NULL;
+            $users = $userRepo->findBY(array("nickname" => $_POST['username']));
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+            if (count($users) > 0) {
+                $errorMsg = "Nickname already used.";
+            } else if ($_POST['password'] != $_POST['passwordRetype']) {
+                $errorMsg = "Passwords are not the same.";
+            } else if (strlen(trim($_POST['password'])) < 8) {
+                $errorMsg = "Your password should have at least 8 characters.";
+            } else if (strlen(trim($_POST['username'])) < 4) {
+                $errorMsg = "Your nickame should have at least 4 characters.";
+            }
+            if ($errorMsg) {
+                include "../views/RegisterForm.php";
+            } else {
+                // $user = CreateNewUser($_POST['username'], $_POST['password']);
+                $user = new User();
+                $user->nickname = $_POST["username"];
+                $user->password = $_POST["password"];
+                $user->contact = "";
+                $manager->persist($user);
+                $manager->flush();
+                $_SESSION['user'] = $user;
+                header('Location: ?action=display');
+            }
+        } else {
+            include "../templates/RegisterForm.php";
+        }
+        break;
 
-    <title>Freecycle Marseille</title>
-</head>
+    case 'logout':
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+        }
+        header('Location: ?action=display');
+        break;
 
-<body style="background-image: url('https://www.vps.net/blog/wp-content/uploads/2016/08/shutterstock_349708880-710x345.jpg'); background-repeat: repeat;">
-    <nav class="navbar navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand h1 pt-3">SHOPPING GRATUIT ENTRE MARSEILLAIS</a>
-            <form class="form-inline">
-                <input class="form-control border-dark rounded-0 mr-2" type="search" placeholder="Chercher" aria-label="Chercher">
-                <!-- <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Chercher</button> -->
-                <button class="btn-success border-0 px-4 py-2 ml-2">LOGIN</button>
-                <!-- <button class="btn-danger px-3 ml-2">OUT</button> -->
-            </form>
-        </div>
-    </nav>
+    case 'login':
+        if (isset($_POST['username']) && isset($_POST['password'])) {
+            $users = $userRepo->findBY(array("nickname" => $_POST['username'], "password" => $_POST['password']));
+            if (count($users) == 1) {
+                $_SESSION['user'] = $users[0];
+                header('Location: ?action=display');
+            } else {
+                $errorMsg = "Wrong login or password.";
+                include "../templates/LoginForm.php";
+            }
+        } else {
+            include "../templates/LoginForm.php";
+        }
+        break;
 
-    <div class="container py-5 mb-5" style="color: #E8E4E1;">
-        <h1 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; letter-spacing: -10px; font-size: 284px;">
-            FREECYCLE
-        </h1>
-        <h1 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 180px; letter-spacing: 50px; line-height: 40%">
-            Marseille
-        </h1>
-    </div>
+    case 'new':
+        break;
 
-    <main class="container">
-        <div class="row">
-
-            <?php foreach ($items as $item) { ?>
-
-                <article class="col-12">
-                    <div class="my-3" style="background-color: #E8E4E1; border: solid #948F8A; border-width: thick;">
-                        <div class="row">
-                            <div class="col-4">
-                                <div style="background: url('<?php echo $item->url_image ?>') no-repeat center; background-size: cover; min-height: 100%; position: relative">
-                                </div>
-                            </div>
-                            <div class="col-8  ">
-                                <div class="card-body">
-                                    <h5 class="card-title h2 "><?php echo $item->title ?></h5>
-                                    <p class="card-text"><?php echo $item->content ?>
-                                        <small class="text-muted"><?php echo $item->created_at ?></small>
-                                    </p>
-                                    <p class="card-text"><span class="badge badge-secondary rounded-0"><?php echo $item->category ?></span>
-                                        <span class="badge badge-secondary rounded-0"><?php echo $item->location ?></span></p>
-                                    <p class="card-text">Contact: <?php echo $item->user->nickname ?>
-                                        <a href="#" class="card-link"><?php echo $item->contact ?></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-            <?php } ?>
-
-        </div>
-    </main>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-</body>
-
-</html>
+    case 'display':
+    default:
+        $items = array();
+        if (isset($_GET["search"])) {
+            $search = $_GET["search"];
+            if (strpos($search, "@") === 0) {
+                $nickname = substr($search, 1);
+                $users = $userRepo->findBy(array("nickname" => $nickname));
+                if (count($users) == 1) {
+                    $user = $users[0];
+                    $items = $postRepo->findBy(array("user" => $user->id));
+                }
+            } else {
+                $items = $postRepo->findBy(array("title" => $search));
+            }
+            if (count($items) == 0) {
+                $items = $postRepo->findAll();
+            }
+        } else {
+            $items = $postRepo->findAll();
+        }
+        include "../templates/display.php";
+        break;
+}
