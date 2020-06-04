@@ -23,7 +23,7 @@ switch ($action) {
     case 'register':
         if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordRetype'])) {
             $errorMsg = NULL;
-            $users = $userRepo->findBY(array("nickname" => $_POST['username']));
+            $users = $userRepo->findBy(array("nickname" => $_POST['username']));
 
             if (count($users) > 0) {
                 $errorMsg = "Nickname already used.";
@@ -35,13 +35,13 @@ switch ($action) {
                 $errorMsg = "Your nickame should have at least 4 characters.";
             }
             if ($errorMsg) {
-                include "../views/RegisterForm.php";
+                include "../templates/RegisterForm.php";
             } else {
                 // $user = CreateNewUser($_POST['username'], $_POST['password']);
                 $user = new User();
                 $user->nickname = $_POST["username"];
                 $user->password = $_POST["password"];
-                $user->contact = "";
+                $user->contact = $_POST["contact"];
                 $manager->persist($user);
                 $manager->flush();
                 $_SESSION['user'] = $user;
@@ -75,6 +75,31 @@ switch ($action) {
         break;
 
     case 'new':
+        if (isset($_SESSION['user']) && isset($_POST['img']) && isset($_POST['title']) && isset($_POST['content']) && isset($_POST['category']) && isset($_POST['location']) && isset($_POST['contact'])){
+            $errorMsg = NULL;
+            if(empty($_POST['img']) || empty($_POST['title']) || empty($_POST['content']) || empty($_POST['category']) || empty($_POST['location']) || empty($_POST['contact'])){
+                $errorMsg = "Veuillez remplir tous les champs";
+            }
+            if($errorMsg){
+                include "../templates/AddPost.php";
+            } else {
+                $post = new Post();
+                $post->url_image = $_POST['img'];
+                $post->title = $_POST['title'];
+                $post->content = $_POST['content'];
+                $post->created_at = "il y à 3 min";
+                $post->category = $_POST['category'];
+                $post->location = $_POST['location'];
+                $post->contact = $_POST['contact'];
+                $post->user = $_SESSION['user'];
+                $manager->persist($post);
+                $manager->flush();
+                header('Location: ?action=display');
+            }
+        }
+        else {
+            include "../templates/AddPost.php";
+        }
         break;
 
     case 'display':

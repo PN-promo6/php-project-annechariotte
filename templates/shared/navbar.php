@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand h1 pt-3" href="?action=display" role="button">SHOPPING GRATUIT ENTRE MARSEILLAIS</a>
+        <a class="navbar-brand h1 pt-3" href="?action=display">SHOPPING GRATUIT ENTRE MARSEILLAIS</a>
 
         <form class="nav-item ml-auto">
             <input name="search" class="form-control border-dark rounded-0 " type="search" placeholder="Chercher" aria-label="Chercher">
@@ -9,7 +9,8 @@
         <?php
         if (isset($_SESSION['user'])) {
         ?>
-            <a class="nav-item btn-danger border-0 px-4 py-2 ml-2" href="?action=logout" role="button">LOGOUT</a>
+            <a class="nav-item btn-danger border-0 px-4 py-2 ml-2" href="?action=logout" >LOGOUT</a>
+            <a class="nav-item btn-dark border-0 px-4 py-2 ml-2" type="submit" href="?action=new">DONATE</a>
         <?php
         } else {
         ?>
