@@ -24,7 +24,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-10 col-md-9 col-lg-8 mx-auto">
-                <form class="form-signin" method="POST" action="?action=register">
+                <form class="form-signin" method="POST" action="/register">
                     <h2 class="form-signin-heading text-center mt-5 mb-2" style="color: #E8E4E1; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 234px;">JOIN US</h2>
                     <?php
                     if (isset($errorMsg)) {

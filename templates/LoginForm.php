@@ -25,7 +25,7 @@
 
         <div class="row">
             <div class="col-sm-10 col-md-9 col-lg-8 mx-auto mt-5">
-                <form class="form-signin" method="POST" action="?action=login">
+                <form class="form-signin" method="POST" action="/login">
                     <h2 class="form-signin-heading text-center mb-5 mt-5" style="color: #E8E4E1; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 115px;">Welcome Back</h2>
                     <?php
                     if (isset($errorMsg)) {

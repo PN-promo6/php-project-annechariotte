@@ -31,7 +31,7 @@ class PostController
                 $post->user = $_SESSION['user'];
                 $manager->persist($post);
                 $manager->flush();
-                header('Location: ?action=display');
+                header('Location: /display');
             }
         }
         else {
