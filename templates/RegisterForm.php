@@ -34,6 +34,7 @@
                     <input type="text" class="form-control border-dark rounded-0 mb-1" name="username" placeholder="Nickname (4 characters)" required="" autofocus="" />
                     <input type="password" class="form-control border-dark rounded-0 mb-1" name="password" placeholder="Password (8 characters)" required="" />
                     <input type="password" class="form-control border-dark rounded-0 mb-1" name="passwordRetype" placeholder="Retype password" required="" />
+                    <input type="text" class="form-control border-dark rounded-0 mb-1" name="contact" placeholder="Your Email or Phone" required="" autofocus="" />
                     <button class="btn btn-lg btn-dark rounded-0 btn-block" type="submit">SIGN IN</button>
                 </form>
             </div>
