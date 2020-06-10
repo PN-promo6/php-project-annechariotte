@@ -37,6 +37,6 @@ class HomeController extends AbstractController
         $data = array(
             "items" => $items
         );
-        return $this->render('display.php', $data);
+        return $this->render('Display.php', $data);
     }
 }
