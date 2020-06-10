@@ -17,9 +17,8 @@
 </head>
 
 <body style="background-image: url('https://www.vps.net/blog/wp-content/uploads/2016/08/shutterstock_349708880-710x345.jpg'); background-repeat: repeat;">
-    <?php
-    include "shared/navbar.php";
-    ?>
+
+    {% include "shared/navbar.php" %}
 
     <div class="container">
         <div class="row">
@@ -42,9 +41,9 @@
                             <input type="text" class="form-control border-dark rounded-0 mb-1" name="location" placeholder="Votre arrondissement" required="" />
                             <input type="text" class="form-control border-dark rounded-0 mb-1" name="contact" placeholder="Email or Phone" required="" />
                         </div>
-                    <div class="col">
-                        <button class="btn btn-lg btn-dark rounded-0 btn-block mb-5" type="submit">DONATE</button>
-                    </div>
+                        <div class="col">
+                            <button class="btn btn-lg btn-dark rounded-0 btn-block mb-5" type="submit">DONATE</button>
+                        </div>
                     </div>
                 </form>
             </div>

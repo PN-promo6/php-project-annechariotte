@@ -9,7 +9,7 @@
         <?php
         if (isset($_SESSION['user'])) {
         ?>
-            <a class="nav-item btn-danger border-0 px-4 py-2 ml-2" href="/logout" >LOGOUT</a>
+            <a class="nav-item btn-danger border-0 px-4 py-2 ml-2" href="/logout">LOGOUT</a>
             <a class="nav-item btn-dark border-0 px-4 py-2 ml-2" type="submit" href="/new">DONATE</a>
         <?php
         } else {
@@ -19,14 +19,5 @@
         <?php
         }
         ?>
-
-        <!-- <form class="justify-content-end">
-            <input type="hidden" name="action" value="login">
-            <button class="btn-success border-0 px-4 py-2 ml-0" type="submit">LOGIN</button>
-        </form>
-        <form class="justify-content-end">
-            <input type="hidden" name="action" value="register">
-            <button class="btn-dark border-0 px-4 py-2 ml-0" type="submit">SIGN UP</button>
-        </form> -->
     </div>
 </nav>

@@ -3,39 +3,45 @@
 namespace Controller;
 
 use Entity\Post;
+use ludk\Http\Request;
+use ludk\Http\Response;
+use ludk\Controller\AbstractController;
 
-
-
-class PostController
+class PostController extends AbstractController
 {
-    public function create()
+    public function create(Request $request): Response
     {
-        global $manager;
+        $manager = $this->getOrm()->getManager();
 
-        if (isset($_SESSION['user']) && isset($_POST['img']) && isset($_POST['title']) && isset($_POST['content']) && isset($_POST['category']) && isset($_POST['location']) && isset($_POST['contact'])){
+        if (($request->getSession()->has('user')) && $request->request->has('img') && $request->request->has('title') && $request->request->has('content') && $request->request->has('category') && $request->request->has('location') && $request->request->has('contact')) {
             $errorMsg = NULL;
-            if(empty($_POST['img']) || empty($_POST['title']) || empty($_POST['content']) || empty($_POST['category']) || empty($_POST['location']) || empty($_POST['contact'])){
+            if (empty($request->request->get('img')) || empty($request->request->get('title')) || empty($request->request->get('content')) || empty($request->request->get('category')) || empty($request->request->get('location')) || empty($request->request->get('contact'))) {
                 $errorMsg = "Veuillez remplir tous les champs";
             }
-            if($errorMsg){
-                include "../templates/AddPost.php";
+            if ($errorMsg) {
+                $data = array(
+                    "errorMsg" => $errorMsg
+                );
+                return $this->render('AddPost.php', $data);
             } else {
                 $post = new Post();
-                $post->url_image = $_POST['img'];
-                $post->title = $_POST['title'];
-                $post->content = $_POST['content'];
+                $post->url_image = $request->request->get('img');
+                $post->title = $request->request->get('title');
+                $post->content = $request->request->get('content');
                 $post->created_at = "il y à 3 min";
-                $post->category = $_POST['category'];
-                $post->location = $_POST['location'];
-                $post->contact = $_POST['contact'];
-                $post->user = $_SESSION['user'];
+                $post->category = $request->request->get('category');
+                $post->location = $request->request->get('location');
+                $post->contact = $request->request->get('contact');
+                $post->user = $request->getSession()->get("user");
                 $manager->persist($post);
                 $manager->flush();
-                header('Location: /display');
+                return $this->redirectToRoute('display');
             }
-        }
-        else {
-            include "../templates/AddPost.php";
+        } else {
+            $data = array(
+                "errorMsg" => null
+            );
+            return $this->render('AddPost.php', $data);
         }
     }
 }

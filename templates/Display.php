@@ -13,9 +13,8 @@
 </head>
 
 <body style="background-image: url('https://www.vps.net/blog/wp-content/uploads/2016/08/shutterstock_349708880-710x345.jpg'); background-repeat: repeat;">
-    <?php
-    include "shared/navbar.php";
-    ?>
+
+    {% include "shared/navbar.php" %}
 
     <div class="container py-5 mb-5" style="color: #E8E4E1;">
         <h1 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; letter-spacing: -10px; font-size: 284px;">
